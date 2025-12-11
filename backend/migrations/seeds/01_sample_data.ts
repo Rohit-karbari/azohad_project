@@ -13,7 +13,7 @@ export async function seed(knex: Knex): Promise<void> {
   await knex('doctors').del();
 
   // Sample patient
-  const [patient] = await knex('patients')
+  const [patientRow] = await knex('patients')
     .insert({
       email: 'patient1@example.com',
       password_hash: await hashPassword('Patient123!'),
@@ -30,9 +30,11 @@ export async function seed(knex: Knex): Promise<void> {
       email_verified: true,
     })
     .returning('id');
+  const patient =
+    typeof patientRow === 'object' && patientRow !== null ? (patientRow as any).id : patientRow;
 
   // Sample doctors
-  const [doctor1] = await knex('doctors')
+  const [doctor1Row] = await knex('doctors')
     .insert({
       email: 'doctor1@example.com',
       password_hash: await hashPassword('Doctor123!'),
@@ -46,8 +48,10 @@ export async function seed(knex: Knex): Promise<void> {
       email_verified: true,
     })
     .returning('id');
+  const doctor1 =
+    typeof doctor1Row === 'object' && doctor1Row !== null ? (doctor1Row as any).id : doctor1Row;
 
-  const [doctor2] = await knex('doctors')
+  const [doctor2Row] = await knex('doctors')
     .insert({
       email: 'doctor2@example.com',
       password_hash: await hashPassword('Doctor123!'),
@@ -61,6 +65,8 @@ export async function seed(knex: Knex): Promise<void> {
       email_verified: true,
     })
     .returning('id');
+  const doctor2 =
+    typeof doctor2Row === 'object' && doctor2Row !== null ? (doctor2Row as any).id : doctor2Row;
 
   // Sample appointments
   const tomorrow = new Date();

@@ -148,6 +148,10 @@ const clinicalNoteController = new ClinicalNoteController(db);
  *         description: Invalid credentials
  */
 app.post('/auth/patient/login', (req, res) => authController.loginPatient(req as AuthRequest, res));
+// Patient registration endpoint
+app.post('/auth/patient/register', (req, res) =>
+  authController.registerPatient(req as AuthRequest, res)
+);
 
 /**
  * @swagger
